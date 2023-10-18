@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^3.2.0",
     "langchain": "^0.0.168",
     "next": "13.5.5",
     "openai": "^4.12.4",

@@ -1,7 +1,31 @@
 'use client';
 import { useState, useRef } from 'react';
+import { useUser } from '@auth0/nextjs-auth0/client';
+
+export function Logout() {
+  return (
+    <a
+      className="border border-blue-500 bg-blue-400 bg-opacity-30 hover:bg-opacity-40 rounded p-2 ms-auto w-[80px] flex"
+      href="/api/auth/logout"
+    >
+      <p className="mx-auto">Logout</p>
+    </a>
+  );
+}
+
+export function Login() {
+  return (
+    <a
+      className="border border-blue-500 bg-blue-400 bg-opacity-30 hover:bg-opacity-40 rounded p-2 mx-auto w-[80px] flex"
+      href="api/auth/login"
+    >
+      <p className="mx-auto">Login</p>
+    </a>
+  );
+}
 
 export default function Home() {
+  const { user, error: userError, isLoading } = useUser();
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState('');
@@ -68,40 +92,53 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col p-24">
-      <div className="min-w-lg items-center p-24 space-y-10">
-        <h1 className="text-xl">AI Requirement Writer</h1>
-        <div className="h-2">
-          {loading && <p className="text-green-500">{`Please wait...`}</p>}
-          {error && (
-            <p className="text-red-500">{`There's been an error. Please wait and try again.`}</p>
-          )}
-          {copied && (
-            <p className="text-blue-500">{`Text copied to clipboard`}</p>
-          )}
+      <div className="min-w-lg items-center p-24 space-y-10 min-h-screen">
+        <div className="flex ">
+          <h1 className="text-xl my-auto">AI Requirement Writer</h1>
+          {user && <Logout />}
         </div>
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-10">
-          <textarea
-            rows="4"
-            cols="7"
-            placeholder="Enter requirement"
-            className="bg-black border p-2"
-            required
-            value={formData.requirementText}
-            onChange={handleChange}
-          ></textarea>
-          <button className="bg-blue-500 w-[200px] border-2 rounded hover:bg-blue-600">
-            Submit
-          </button>
-        </form>
-        <h1>Output:</h1>
-        {result !== '' && (
-          <p
-            className="text-white p-2 border-2 border-black rounded-lg hover:border-emerald-400 hover:cursor-pointer"
-            ref={textToCopyRef}
-            onClick={handleCopyClick}
-          >
-            {result}
-          </p>
+
+        {!user ? (
+          <div className="flex flex-col space-y-6">
+            <h1 className="text-2xl mx-auto">Please Log in</h1>
+            <Login />
+          </div>
+        ) : (
+          <div className="">
+            <div className="h-8 mb-2">
+              {loading && <p className="text-green-500">{`Please wait...`}</p>}
+              {error && (
+                <p className="text-red-500">{`There's been an error. Please wait and try again.`}</p>
+              )}
+              {copied && (
+                <p className="text-blue-500">{`Text copied to clipboard`}</p>
+              )}
+            </div>
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-10">
+              <textarea
+                rows="4"
+                cols="7"
+                placeholder="Enter requirement"
+                className="bg-black border p-2"
+                required
+                value={formData.requirementText}
+                onChange={handleChange}
+              ></textarea>
+              <button className="bg-blue-500 w-[200px] border-2 rounded hover:bg-blue-600">
+                Submit
+              </button>
+            </form>
+            <h1 className="my-8">Output:</h1>
+            {result !== '' && (
+              <p
+                className="text-white p-2 border-2 border-black rounded-lg hover:border-emerald-400 hover:cursor-pointer"
+                ref={textToCopyRef}
+                onClick={handleCopyClick}
+              >
+                {result}
+              </p>
+            )}
+          </div>
         )}
       </div>
     </main>
