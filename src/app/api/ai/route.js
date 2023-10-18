@@ -10,7 +10,7 @@ export const POST = async (request) => {
 
     const model = new OpenAI({ temperature: 1 });
     const template =
-      'Rewrite this paragraph in the style of hemingway. Use an active voice. Use a subject / object sentence structure. Start the first sentance with the words Consumers said. If a sentence involves management, start that sentence with Management demonstrated. If a sentence involes documentation, start that sentence with Documentation showed.\n paragraph: {paragraph}';
+      'Rewrite this paragraph in the style of hemingway. Use an active voice. Use a subject / object sentence structure. \n paragraph: {paragraph}';
 
     const prompt = new PromptTemplate({
       template,

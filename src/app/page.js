@@ -94,7 +94,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col p-24">
       <div className="min-w-lg items-center p-24 space-y-10 min-h-screen">
         <div className="flex ">
-          <h1 className="text-xl my-auto">AI Requirement Writer</h1>
+          <h1 className="text-xl my-auto">Req Writer</h1>
           {user && <Logout />}
         </div>
 
@@ -118,7 +118,7 @@ export default function Home() {
               <textarea
                 rows="4"
                 cols="7"
-                placeholder="Enter requirement"
+                placeholder="Enter requirement summary"
                 className="bg-black border p-2"
                 required
                 value={formData.requirementText}
