@@ -20,9 +20,8 @@ export const POST = async (request) => {
     const chain = new LLMChain({ llm: model, prompt });
 
     const result = await chain.call({ paragraph: text });
+    return NextResponse.json(result, { status: 200 });
   } catch (error) {
     return NextResponse.json(error, { status: 500 });
   }
-
-  return NextResponse.json(result, { status: 200 });
 };
